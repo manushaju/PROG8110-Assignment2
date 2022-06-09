@@ -214,3 +214,11 @@ main{
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
 }
+
+li.from-server p{
+    overflow: hidden;
+}
+li.from-server p a{
+    color: white;
+    text-decoration: underline;
+}

@@ -19,6 +19,18 @@ $(function(){
 
     // auto focus to the message input, save a click yay
     $('#msg').focus();
+    // socket stuff
+    const socket = io(document.URL);
+    const data = {
+        from: phone
+    };
+    socket.emit('receive message', data);
+    socket.on('receive message', (data)=> {
+        // pass strings around
+        History.add(data.message, 'server');
+        print(data.message, 'server');
+    });
+
 });
 
 /**
@@ -83,6 +95,7 @@ function getNextStory(msg){
             data[i] = data[i].replace(/\<(\/)?Message\>/gi, '');
             data[i] = data[i].replace(/\<(\/)?Response\>/gi, '');
             data[i] = data[i].replace(/([\r\n]+|\%0a+)/g, '<br>');
+            data[i] = linkifyHtml(data[i], {target: "_blank"});
 
             // pass strings around
             History.add(data[i], 'server');
