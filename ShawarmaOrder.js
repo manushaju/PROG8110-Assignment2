@@ -159,7 +159,7 @@ module.exports = class ShwarmaOrder extends Order {
         break;
       case OrderState.PAYMENT:
         let address = sInput.purchase_units[0].shipping.address;
-        let deliveryaddress = `${address.address_line_1}, ${address.address_line_1}, ${address.admin_area_2}, ${address.admin_area_1} ${address.postal_code}`;
+        let deliveryaddress = `${address.address_line_1}, ${address.address_line_2}, ${address.admin_area_2}, ${address.admin_area_1} ${address.postal_code}`;
         this.isDone(true);
         let d = new Date();
         d.setMinutes(d.getMinutes() + 20);
