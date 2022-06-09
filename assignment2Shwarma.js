@@ -1,4 +1,5 @@
-const Order = require("./assignment1Order");
+const Order = require("./assignment2Order");
+const { validSize, validFilling } = require("./validValues");
 
 const OrderState = Object.freeze({
     WELCOMING: Symbol("welcoming"),
@@ -11,6 +12,7 @@ const OrderState = Object.freeze({
     DRINKS: Symbol("drinks"),
     FRIES: Symbol("fries"),
 });
+
 
 module.exports = class ShwarmaOrder extends Order {
     constructor() {
@@ -36,6 +38,10 @@ module.exports = class ShwarmaOrder extends Order {
                 aReturn.push("What size would you like?");
                 break;
             case OrderState.SIZE:
+                if (!validSize.includes(sInput.toLowerCase())) {                    
+                    aReturn.push(`Please enter a valid size.\n (${validSize.toString()}) `);
+                    break;
+                }
                 this.stateCur = OrderState.FILLING
                 this.sSize = sInput;
                 if (this.sSize == "large") { this.sTotal += 20; }
@@ -44,6 +50,10 @@ module.exports = class ShwarmaOrder extends Order {
                 aReturn.push("What filling would you like?");
                 break;
             case OrderState.FILLING:
+                if (!validFilling.includes(sInput.toLowerCase())) {                    
+                    aReturn.push(`Please enter one of the available fillings.\n (${validFilling.toString()}) `);
+                    break;
+                }
                 this.stateCur = OrderState.SECOND_ITEM
                 this.sFilling = sInput;
                 this.sTotal += 10;
